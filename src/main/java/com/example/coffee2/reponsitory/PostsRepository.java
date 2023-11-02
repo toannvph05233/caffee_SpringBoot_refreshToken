@@ -29,6 +29,6 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
 
 //    List<String> findAllByName(@RequestParam String name);
 
-    //?????? Không dùng vẫn lỗi
-//    PostsEntity getPostsEntityByID(@RequestParam Long id);
+
+
 }

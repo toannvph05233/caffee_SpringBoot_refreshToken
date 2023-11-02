@@ -11,10 +11,12 @@ public class PostsResponse {
     private Long share;
     private Long comment;
     private String title;
-    private String content1;
+    private String contentPost;
+    private String contentDetail;
     private Long status;
     private String imagePath;
     private Long userId;
     private String createdAt;
     private String updatedAt;
+
 }

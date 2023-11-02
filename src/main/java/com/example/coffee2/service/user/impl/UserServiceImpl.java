@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean create(UserRequest request) {
+    public boolean create(UserRequest request, MultipartFile file) {
         Date now = new Date();
         try {
             List<String> checkNameExist = respository.findAllUserName();
@@ -79,6 +80,8 @@ public class UserServiceImpl implements UserService {
             obj.setSex(request.getSex());
             obj.setCreateDate(now);
             obj.setStatus(1L);
+            obj.setImage(file.getName());
+//            obj.setData(request.getData());
             respository.save(obj);
             return true;
         } catch (Exception e) {
@@ -107,11 +110,12 @@ public class UserServiceImpl implements UserService {
             obj.setRole(request.getRole());
             obj.setPhoneNumber(request.getPhoneNumber());
 //            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
-            obj.setDateOfBirth(now);
+            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
             obj.setSex(request.getSex());
 //            obj.setCreateDate(DateProc.stringToDateDDMMYYYY(request.getCreateDate()));
             obj.setCreateDate(now);
             obj.setStatus(request.getStatus());
+            obj.setImage(request.getImage());
             respository.save(obj);
             return true;
 

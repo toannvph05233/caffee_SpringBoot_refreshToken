@@ -18,5 +18,10 @@ public class UserResponse {
     private Long sex;
     private String createDate;
     private Long status;
+    private String image;
+//    private byte[] data;
+
+    private String data;
+
 
 }

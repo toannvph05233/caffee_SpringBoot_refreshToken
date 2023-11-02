@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/posts")
 public class PostsController {
     @Autowired
@@ -46,7 +46,7 @@ public class PostsController {
         apiBaseResponse.setData(listResult);
         apiBaseResponse.setOptional(count);
 //        ApiBaseResponse response = ApiBaseResponse.success(listResult, count);
-        log.info("response: " + listResult);
+//        log.info("response: " + listResult);
 //        return new ResponseEntity<>(listResult, HttpStatus.OK);
 //        return new ResponseEntity<> (HttpStatus.OK);
         return apiBaseResponse;

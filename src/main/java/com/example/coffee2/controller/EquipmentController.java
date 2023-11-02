@@ -11,6 +11,7 @@ import com.example.coffee2.response.EquipmentResponse;
 import com.example.coffee2.response.base.ApiBaseResponse;
 import com.example.coffee2.service.equipment.EquipmentService;
 import com.example.coffee2.utils.Constants;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Log4j2
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/equipment")
 public class EquipmentController {
     @Autowired
@@ -48,7 +51,7 @@ public class EquipmentController {
     @PostMapping("/create")
     public ApiBaseResponse create(@RequestBody EquipmentRequest request){
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-        List<String> list = repository.findByModel(request.getModel());
+        List<String> list = repository.findByName(request.getName());
         if(list.size() > 0) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Model đã tồn tại");

@@ -15,7 +15,9 @@ public interface EquipmentRespository extends JpaRepository<EquipmentEntity, Lon
     )
     List<EquipmentEntity> findAllEquipment();
 
-    List<String> findAllByModel(@RequestParam String model);
+    List<String> findAllByName(@RequestParam String name);
 
-    List<String> findByModel(@RequestBody String model);
+    List<String> findByName(@RequestBody String name);
+
+
 }

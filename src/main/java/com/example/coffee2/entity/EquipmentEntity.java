@@ -11,17 +11,16 @@ public class EquipmentEntity {
     @Id
     @SequenceGenerator(name = "equipment_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipment_seq")
-
     private Long id;
-
-    @Column(name = "model")
-    private String model;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content_equipment")
+    private String contentEquipment;
 
     @Column(name = "power")
     private String power;
@@ -37,5 +36,6 @@ public class EquipmentEntity {
 
     @Column(name = "status")
     private Long status;
+
 
 }

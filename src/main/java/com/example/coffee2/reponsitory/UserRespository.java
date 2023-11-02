@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 //????
 @EnableJpaRepositories
@@ -19,17 +20,30 @@ public interface UserRespository extends JpaRepository<UserEntity, Long> {
     )
     List<UserEntity> findAllUser();
 
-    @Query(
-            value = "select e.user_name from user1 e where e.user_name = :userName",
-            nativeQuery = true
-    )
-    List<String> findByUserName(@RequestParam String userName);
+//    List<String> findAllByUserName();
+
+    //    @Query(
+//            value = "select e.user_name from user1 e where e.user_name = :userName",
+//            nativeQuery = true
+//    )
+    List<UserEntity> findByUserName(@RequestParam String userName);
 
     @Query(
             value = "select user_name from user1",
             nativeQuery = true
     )
     List<String> findAllUserName();
+
+
+//
+//    @Query(
+//            value = "select e.user_name from user1 e where e.user_name = :userName",
+//            nativeQuery = true
+//    )
+//    Optional<UserEntity> findByUserName1(String userName);
+//    Optional<UserEntity> findByName(String name);
+g
+//    List<UserEntity> findByUserName(@RequestParam String userName);
 
 //    List<String> getByUserName(@RequestParam String userName);
 }

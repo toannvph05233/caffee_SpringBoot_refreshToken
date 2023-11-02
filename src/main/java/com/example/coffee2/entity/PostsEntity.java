@@ -28,8 +28,11 @@ public class PostsEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content1")
-    private String content1;
+    @Column(name = "content_post")
+    private String contentPost;
+
+    @Column(name = "content_detail")
+    private String contentDetail;
 
     @Column(name = "status")
     private Long status;
@@ -45,6 +48,7 @@ public class PostsEntity {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
 
 //    @Override
 //    public String toString() {

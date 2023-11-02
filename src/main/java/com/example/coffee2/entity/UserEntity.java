@@ -3,12 +3,22 @@ package com.example.coffee2.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "user1")
 public class UserEntity {
+
+    public UserEntity() {
+        super();
+    }
+
+    public UserEntity(byte[] bytes) {
+        this.data = bytes;
+    }
+
     @Id
     @SequenceGenerator(name = "user1_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user1_seq")
@@ -42,6 +52,12 @@ public class UserEntity {
     @Column(name = "status")
     private Long status;
 
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "image_data")
+    @Lob
+    private byte[] data;
 
 
 

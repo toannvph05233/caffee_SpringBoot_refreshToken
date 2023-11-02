@@ -9,6 +9,7 @@ import com.example.coffee2.service.posts.PostsService;
 import com.example.coffee2.utils.DateProc;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,7 @@ public class PostsServiceImpl implements PostsService {
         Date now = new Date();
         try {
             List<String> checkNameExist = repository.findByTitle(request.getTitle());
+
             if (checkNameExist.contains(request.getTitle())) {
                 log.error("create | Tài khoản đã tồn tại");
                 return false;
@@ -48,14 +50,14 @@ public class PostsServiceImpl implements PostsService {
             obj.setLike1(request.getLike1());
             obj.setShare(request.getShare());
             obj.setComment(request.getComment());
-            obj.setContent1(request.getContent1());
+            obj.setContentPost(request.getContentPost());
+            obj.setContentDetail(request.getContentDetail());
             obj.setTitle(request.getTitle());
             obj.setStatus(1L);
             obj.setImagePath(request.getImagePath());
             obj.setUserId(request.getUserId());
-            obj.setCreatedAt(now);
-            obj.setUpdatedAt(DateProc.stringToDateDDMMYYYY(request.getUpdatedAt()));
-//            obj.setTotalComment(request.getTotalComment());
+            obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
+            obj.setUpdatedAt(now);
             repository.save(obj);
             return true;
         } catch (Exception e) {
@@ -78,7 +80,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setLike1(request.getLike1());
             obj.setShare(request.getShare());
             obj.setComment(request.getComment());
-            obj.setContent1(request.getContent1());
+            obj.setContentPost(request.getContentPost());
             obj.setTitle(request.getTitle());
             obj.setStatus(request.getStatus());
             obj.setImagePath(request.getImagePath());

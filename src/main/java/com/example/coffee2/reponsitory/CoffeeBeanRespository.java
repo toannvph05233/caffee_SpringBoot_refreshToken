@@ -19,7 +19,16 @@ public interface CoffeeBeanRespository extends JpaRepository<CoffeeBeanEntity, L
             value = "SELECT e.name FROM coffee_bean e where e.name = :name",
             nativeQuery = true
     )
-    List<CoffeeBeanEntity> findAllCoffeeBeanName(@RequestParam String name);
+    List<String> findAllCoffeeBeanName(@RequestParam String name);
+
+
+//    @Query(
+//            value = "SELECT slug FROM coffee_bean",
+//            nativeQuery = true
+//    )
+//    List<String> findAllidSlugCoffeeBean();
+
+
 
 
     //?????? Không dùng vẫn lỗi

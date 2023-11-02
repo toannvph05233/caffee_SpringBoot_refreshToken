@@ -2,6 +2,8 @@ package com.example.coffee2.request;
 
 import lombok.Data;
 
+import java.sql.Blob;
+
 @Data
 public class UserRequest {
     private Long id;
@@ -18,6 +20,9 @@ public class UserRequest {
     private Long sex;
     private String createDate;
     private Long status;
+    private String image;
+    private String data;
+//    private byte[] data;
 
     private int pageIndex;
     private int pageSize;

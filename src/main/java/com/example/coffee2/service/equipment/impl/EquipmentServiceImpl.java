@@ -1,5 +1,6 @@
 package com.example.coffee2.service.equipment.impl;
 
+import com.example.coffee2.entity.CoffeeBeanEntity;
 import com.example.coffee2.entity.EquipmentEntity;
 import com.example.coffee2.reponsitory.Customer.EquipmentCustomer;
 import com.example.coffee2.reponsitory.EquipmentRespository;
@@ -7,6 +8,7 @@ import com.example.coffee2.request.EquipmentRequest;
 import com.example.coffee2.response.EquipmentResponse;
 import com.example.coffee2.service.equipment.EquipmentService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,22 +36,24 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public boolean create(EquipmentRequest request) {
         try {
-            List<String> chechNameExist = respository.findAllByModel(request.getModel());
-            if (chechNameExist.contains(request.getModel())) {
+            List<String> chechNameExist = respository.findAllByName(request.getName());
+
+            if (chechNameExist.contains(request.getName())) {
                 log.error("model đã tồn tại");
                 return false;
             }
             EquipmentEntity obj = new EquipmentEntity();
-            obj.setModel(request.getModel());
             obj.setName(request.getName());
-            obj.setBrand(request.getBrand());
+            obj.setTitle(request.getTitle());
+            obj.setContentEquipment(request.getContentEquipment());
             obj.setPower(request.getPower());
-            obj.setPrice(Double.valueOf(request.getPrice()));
+            obj.setPrice(null);
             obj.setCapacity(request.getCapacity());
             obj.setDescription(request.getDescription());
-            obj.setStatus((long) request.getStatus());
+            obj.setStatus(1L);
             respository.save(obj);
             return true;
+
         } catch (Exception e) {
             log.error("not success: " + e.getMessage());
             return false;
@@ -59,20 +63,20 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public boolean update(EquipmentRequest request) {
         try {
-            List<String> chechNameExist = respository.findAllByModel(request.getModel());
+            List<String> chechNameExist = respository.findAllByName(request.getName());
 //            if (chechNameExist.contains(request.getModel())) {
 //                log.error("model đã tồn tại");
 //                return false;
 //            }
             EquipmentEntity obj = respository.findById(request.getId()).orElse(null);
-            obj.setModel(request.getModel());
             obj.setName(request.getName());
-            obj.setBrand(request.getBrand());
+            obj.setTitle(request.getTitle());
+            obj.setContentEquipment(request.getContentEquipment());
             obj.setPower(request.getPower());
-            obj.setPrice(Double.valueOf(request.getPrice()));
+            obj.setPrice(null);
             obj.setCapacity(request.getCapacity());
             obj.setDescription(request.getDescription());
-            obj.setStatus((long) request.getStatus());
+            obj.setStatus(request.getStatus());
             respository.save(obj);
             return true;
         } catch (Exception e) {

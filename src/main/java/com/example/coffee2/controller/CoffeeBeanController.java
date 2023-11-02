@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/coffee")
 public class CoffeeBeanController {
     @Autowired

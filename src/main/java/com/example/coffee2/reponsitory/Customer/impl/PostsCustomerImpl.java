@@ -103,7 +103,8 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
 //            sql.append(" '' c, \n");
 //            sql.append(" '' d, \n");
             sql.append("f.title, \n");
-            sql.append("f.content1, \n");
+            sql.append("f.content_post, \n");
+            sql.append("f.content_detail, \n");
             sql.append("f.status, \n");
             sql.append("f.image_path, \n");
             sql.append("f.user_id, \n");
