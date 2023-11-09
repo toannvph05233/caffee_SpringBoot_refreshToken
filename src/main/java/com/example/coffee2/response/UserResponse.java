@@ -8,20 +8,19 @@ public class UserResponse {
     private String userName;
     private String passWord;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
     private Long age;
     private Long role;
     private Long phoneNumber;
     private String dateOfBirth;
-    private Long sex;
+    private String sex;
     private String createDate;
     private Long status;
     private String image;
 //    private byte[] data;
 
-    private String data;
+//    private String data;
 
 
 }

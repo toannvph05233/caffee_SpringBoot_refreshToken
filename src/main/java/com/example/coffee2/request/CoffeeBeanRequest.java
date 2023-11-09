@@ -13,6 +13,7 @@ public class CoffeeBeanRequest {
     private String plantingInstructions;
     private Long status;
     private String contentCoffee;
+    private String image;
 
     private int pageIndex;
     private int pageSize;

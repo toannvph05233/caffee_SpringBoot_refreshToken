@@ -10,15 +10,6 @@ import java.util.Date;
 @Data
 @Table(name = "user1")
 public class UserEntity {
-
-    public UserEntity() {
-        super();
-    }
-
-    public UserEntity(byte[] bytes) {
-        this.data = bytes;
-    }
-
     @Id
     @SequenceGenerator(name = "user1_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user1_seq")
@@ -31,10 +22,8 @@ public class UserEntity {
     private String passWord;
     @Column(name = "email")
     private String email;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
     @Column(name = "address")
     private String address;
     @Column(name = "age")
@@ -54,10 +43,10 @@ public class UserEntity {
 
     @Column(name = "image")
     private String image;
-
-    @Column(name = "image_data")
-    @Lob
-    private byte[] data;
+//
+//    @Column(name = "image_data")
+//    @Lob
+//    private byte[] data;
 
 
 

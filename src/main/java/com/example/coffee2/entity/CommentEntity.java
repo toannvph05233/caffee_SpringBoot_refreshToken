@@ -28,4 +28,6 @@ public class CommentEntity {
     private String updateAt;
     @Column(name = "like_comment")
     private Long likeComment;
+    @Column(name = "status")
+    private Long status;
 }

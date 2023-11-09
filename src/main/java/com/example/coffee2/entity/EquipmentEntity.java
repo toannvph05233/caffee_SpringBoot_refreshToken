@@ -28,8 +28,8 @@ public class EquipmentEntity {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "capacity")
-    private String capacity;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "description")
     private String description;

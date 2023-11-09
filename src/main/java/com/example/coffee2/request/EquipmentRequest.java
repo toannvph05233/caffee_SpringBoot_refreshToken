@@ -10,7 +10,7 @@ public class EquipmentRequest {
     private String contentEquipment;
     private String power;
     private Long price;
-    private String capacity;
+    private String image;
     private String description;
     private Long status;
 

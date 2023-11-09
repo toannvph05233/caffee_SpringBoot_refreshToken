@@ -34,6 +34,7 @@ public interface UserRespository extends JpaRepository<UserEntity, Long> {
     )
     List<String> findAllUserName();
 
+    Optional<UserEntity> findById(Long id);
 
 //
 //    @Query(
@@ -42,7 +43,7 @@ public interface UserRespository extends JpaRepository<UserEntity, Long> {
 //    )
 //    Optional<UserEntity> findByUserName1(String userName);
 //    Optional<UserEntity> findByName(String name);
-g
+
 //    List<UserEntity> findByUserName(@RequestParam String userName);
 
 //    List<String> getByUserName(@RequestParam String userName);

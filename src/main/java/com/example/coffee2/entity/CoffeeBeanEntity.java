@@ -38,6 +38,9 @@ public class CoffeeBeanEntity {
     @Column(name = "content_coffee")
     private String contentCoffee;
 
+    @Column(name = "image")
+    private String image;
+
 //    @Column(name = "slug")
 //    private Long slug;
 

@@ -52,6 +52,7 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
             obj.setPlantingInstructions(request.getPlantingInstructions());
             obj.setStatus(1L);
             obj.setContentCoffee(request.getContentCoffee());
+            obj.setImage(request.getImage());
             respository.save(obj);
             return true;
         } catch (Exception e) {
@@ -77,6 +78,7 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
             obj.setStatus(request.getStatus());
             obj.setContentCoffee(request.getContentCoffee());
 //            obj.setSlug(request.getSlug());
+            obj.setImage(request.getImage());
             respository.save(obj);
             return true;
         } catch (Exception e) {

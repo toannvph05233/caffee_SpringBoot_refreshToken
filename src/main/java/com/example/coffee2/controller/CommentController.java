@@ -2,6 +2,9 @@ package com.example.coffee2.controller;
 
 import com.example.coffee2.request.CommentRequest;
 import com.example.coffee2.request.EquipmentRequest;
+import com.example.coffee2.request.LikePostsRequest;
+import com.example.coffee2.response.CommentResponse;
+import com.example.coffee2.response.LikePostsResponse;
 import com.example.coffee2.response.base.ApiBaseResponse;
 import com.example.coffee2.service.comment.CommentService;
 import com.example.coffee2.utils.Constants;
@@ -19,12 +22,24 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+
+    @PostMapping("/search")
+    public ApiBaseResponse getListLikePosts(@RequestBody CommentRequest request) {
+        List<CommentResponse> listResult = commentService.getListComment(request);
+        log.info("listResult | comment | search: " + listResult);
+        Long count = commentService.getCountListComment(request);
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        apiBaseResponse.setData(listResult);
+        apiBaseResponse.setOptional(count);
+        return apiBaseResponse;
+    }
+
     @PostMapping("/create")
-    public ApiBaseResponse create(@RequestBody CommentRequest request){
+    public ApiBaseResponse create(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
 
         boolean rs = commentService.create(request);
-        if(!rs) {
+        if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Thêm mới bình luận không thành công");
             apiBaseResponse.setData(request);

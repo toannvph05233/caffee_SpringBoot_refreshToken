@@ -18,6 +18,7 @@ public class PostsRequest {
     private Long userId;
     private String createdAt;
     private String updatedAt;
+    private String hashTag;
 
     private int pageIndex;
     private int pageSize;

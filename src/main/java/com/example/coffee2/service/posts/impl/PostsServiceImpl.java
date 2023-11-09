@@ -56,8 +56,9 @@ public class PostsServiceImpl implements PostsService {
             obj.setStatus(1L);
             obj.setImagePath(request.getImagePath());
             obj.setUserId(request.getUserId());
-            obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
-            obj.setUpdatedAt(now);
+            obj.setCreatedAt(now);
+            obj.setUpdatedAt(null);
+            obj.setHashTag(request.getHashTag());
             repository.save(obj);
             return true;
         } catch (Exception e) {
@@ -88,6 +89,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
             obj.setUpdatedAt(now);
 //            obj.setTotalComment(request.getTotalComment());
+            obj.setHashTag(request.getHashTag());
             repository.save(obj);
             return true;
         } catch (Exception e) {

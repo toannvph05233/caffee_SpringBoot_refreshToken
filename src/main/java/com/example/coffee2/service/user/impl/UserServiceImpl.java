@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean create(UserRequest request, MultipartFile file) {
+    public boolean create(UserRequest request) {
         Date now = new Date();
         try {
             List<String> checkNameExist = respository.findAllUserName();
@@ -70,8 +70,7 @@ public class UserServiceImpl implements UserService {
             obj.setUserName(request.getUserName());
             obj.setPassWord(request.getPassWord());
             obj.setEmail(request.getEmail());
-            obj.setFirstName(request.getFirstName());
-            obj.setLastName(request.getLastName());
+            obj.setName(request.getName());
             obj.setAddress(request.getAddress());
             obj.setAge(request.getAge());
             obj.setRole(request.getRole());
@@ -80,8 +79,7 @@ public class UserServiceImpl implements UserService {
             obj.setSex(request.getSex());
             obj.setCreateDate(now);
             obj.setStatus(1L);
-            obj.setImage(file.getName());
-//            obj.setData(request.getData());
+            obj.setImage(request.getImage());
             respository.save(obj);
             return true;
         } catch (Exception e) {
@@ -103,18 +101,40 @@ public class UserServiceImpl implements UserService {
             obj.setUserName(request.getUserName());
             obj.setPassWord(request.getPassWord());
             obj.setEmail(request.getEmail());
-            obj.setFirstName(request.getFirstName());
-            obj.setLastName(request.getLastName());
+            obj.setName(request.getName());
             obj.setAddress(request.getAddress());
             obj.setAge(request.getAge());
             obj.setRole(request.getRole());
             obj.setPhoneNumber(request.getPhoneNumber());
 //            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
-            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
+            obj.setDateOfBirth(null);
             obj.setSex(request.getSex());
 //            obj.setCreateDate(DateProc.stringToDateDDMMYYYY(request.getCreateDate()));
             obj.setCreateDate(now);
             obj.setStatus(request.getStatus());
+            obj.setImage(request.getImage());
+            respository.save(obj);
+            return true;
+
+        } catch (Exception e) {
+            log.info("not success: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateInfo(UserRequest request) {
+        try {
+            UserEntity obj = respository.findById(request.getId()).orElse(null);
+//            PostsEntity obj = repository.getPostsEntityByID(request.getId());
+            if (obj == null) {
+                log.error("update | không tìm thấy bản ghi");
+                return false;
+            }
+            obj.setName(request.getName());
+            obj.setPhoneNumber(request.getPhoneNumber());
+            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
+            obj.setSex(request.getSex());
             obj.setImage(request.getImage());
             respository.save(obj);
             return true;

@@ -7,6 +7,7 @@ public class LikePostsRequest {
     private Long userId;
     private Long postId;
     private Long isLike;
+    private Long isSave;
 
     private int pageIndex;
     private int pageSize;

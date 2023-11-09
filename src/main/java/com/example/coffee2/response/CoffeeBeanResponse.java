@@ -13,6 +13,7 @@ public class CoffeeBeanResponse {
     private String plantingInstructions;
     private Long status;
     private String contentCoffee;
+    private String image;
 //    private Long slug;
 
 

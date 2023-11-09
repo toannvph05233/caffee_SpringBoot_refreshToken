@@ -31,7 +31,6 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 
-
 @RestController
 @Log4j2
 @CrossOrigin(origins = "*")
@@ -61,102 +60,109 @@ public class UserController {
         return apiBaseResponse;
     }
 
-//    @PostMapping("/create")
-//    public ApiBaseResponse create(@RequestBody UserRequest request, @RequestParam("file") MultipartFile file) {
-//        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-//        //List<String>
-//        List<UserEntity> list = repository.findByUserName(request.getUserName());
-//        if (list.size() > 0) {
-//            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-//            apiBaseResponse.setErrorDescription("Tài khoản đã tồn tại trong hệ thống");
-//            apiBaseResponse.setData(request);
-//            apiBaseResponse.setOptional(1l);
-//            return apiBaseResponse;
-//        }
-//        boolean rs = userService.create(request, file);
-//        if (!rs) {
-//            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-//            apiBaseResponse.setErrorDescription("Tạo mới tài khoản Không thành công");
-//            apiBaseResponse.setData(request);
-//            apiBaseResponse.setOptional(1L);
-//            return apiBaseResponse;
-//        }
-//        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
-//        apiBaseResponse.setErrorDescription("Tạo mới tài khoản thành công");
-//        apiBaseResponse.setData(request);
-//        apiBaseResponse.setOptional(1L);
-//        log.info("response: " + request);
-//        return apiBaseResponse;
-//    }
+    @PostMapping("/search/{id}")
+    ResponseEntity<ResponseObject> findByIdUser(@PathVariable Long id) {
+        Optional<UserEntity> foundAccountNumber = repository.findById(id);
+        log.info("foundAccountNumber: " + foundAccountNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", foundAccountNumber));
+    }
+
+    @PostMapping("/create")
+    public ApiBaseResponse create(@RequestBody UserRequest request) {
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        //List<String>
+        List<UserEntity> list = repository.findByUserName(request.getUserName());
+        if (list.size() > 0) {
+            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+            apiBaseResponse.setErrorDescription("Tài khoản đã tồn tại trong hệ thống");
+            apiBaseResponse.setData(request);
+            apiBaseResponse.setOptional(1l);
+            return apiBaseResponse;
+        }
+        boolean rs = userService.create(request);
+        if (!rs) {
+            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+            apiBaseResponse.setErrorDescription("Tạo mới tài khoản Không thành công");
+            apiBaseResponse.setData(request);
+            apiBaseResponse.setOptional(1L);
+            return apiBaseResponse;
+        }
+        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
+        apiBaseResponse.setErrorDescription("Tạo mới tài khoản thành công");
+        apiBaseResponse.setData(request);
+        apiBaseResponse.setOptional(1L);
+        log.info("response: " + request);
+        return apiBaseResponse;
+    }
 
     // compress the image bytes before storing it in the database
-    public static byte[] compressBytes(byte[] data) {
-        Deflater deflater = new Deflater();
-        deflater.setInput(data);
-        deflater.finish();
+//    public static byte[] compressBytes(byte[] data) {
+//        Deflater deflater = new Deflater();
+//        deflater.setInput(data);
+//        deflater.finish();
+//
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+//        byte[] buffer = new byte[1024];
+//        while (!deflater.finished()) {
+//            int count = deflater.deflate(buffer);
+//            outputStream.write(buffer, 0, count);
+//        }
+//        try {
+//            outputStream.close();
+//        } catch (IOException e) {
+//        }
+//        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+//
+//        return outputStream.toByteArray();
+//    }
+//
+//    // uncompress the image bytes before returning it to the angular application
+//    public static byte[] decompressBytes(byte[] data) {
+//        Inflater inflater = new Inflater();
+//        inflater.setInput(data);
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+//        byte[] buffer = new byte[1024];
+//        try {
+//            while (!inflater.finished()) {
+//                int count = inflater.inflate(buffer);
+//                outputStream.write(buffer, 0, count);
+//            }
+//            outputStream.close();
+//        } catch (IOException ioe) {
+//        } catch (DataFormatException e) {
+//        }
+//        return outputStream.toByteArray();
+//    }
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        while (!deflater.finished()) {
-            int count = deflater.deflate(buffer);
-            outputStream.write(buffer, 0, count);
-        }
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-        }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
+//    @PostMapping("/upload")
+//    public ResponseEntity.BodyBuilder uploadImage(@RequestPart("imageFile") MultipartFile file) throws IOException {
+//        log.info("file: " + file);
+////        UserEntity img = new UserEntity(file.getOriginalFilename(), file.getContentType(),
+////                compressBytes(file.getBytes()));
+//        UserEntity img = new UserEntity(compressBytes(file.getBytes()));
+//        repository.save(img);
+//        return ResponseEntity.status(HttpStatus.OK);
+//    }
 
-        return outputStream.toByteArray();
-    }
-
-    // uncompress the image bytes before returning it to the angular application
-    public static byte[] decompressBytes(byte[] data) {
-        Inflater inflater = new Inflater();
-        inflater.setInput(data);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-        byte[] buffer = new byte[1024];
-        try {
-            while (!inflater.finished()) {
-                int count = inflater.inflate(buffer);
-                outputStream.write(buffer, 0, count);
-            }
-            outputStream.close();
-        } catch (IOException ioe) {
-        } catch (DataFormatException e) {
-        }
-        return outputStream.toByteArray();
-    }
-
-    @PostMapping("/upload")
-    public ResponseEntity.BodyBuilder uploadImage(@RequestPart("imageFile") MultipartFile file) throws IOException {
-        log.info("file: " + file);
-//        UserEntity img = new UserEntity(file.getOriginalFilename(), file.getContentType(),
-//                compressBytes(file.getBytes()));
-        UserEntity img = new UserEntity(compressBytes(file.getBytes()));
-        repository.save(img);
-        return ResponseEntity.status(HttpStatus.OK);
-    }
-
-    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseObject> create(@RequestParam("file") MultipartFile file) throws IOException, SQLException {
-        log.info("getResource | user/create: " + file.getResource());
-        log.info("getBytes | user/create: " + file.getBytes());
-//        log.info("getBytes | user/create: " + Base64.getDecoder().decode(file.getBytes()));
-        byte[] bytes = file.getBytes();
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-
-        UserEntity obj = new UserEntity();
-        obj.setImage(file.getOriginalFilename());
-        log.info("blob: " + blob);
-//        obj.setData(blob.toString());
-//        obj.setData(Base64.getDecoder().decode(file.getBytes()));
-        repository.save(obj);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "get full product successfully", obj)
-        );
-
-    }
+//    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<ResponseObject> create(@RequestParam("file") MultipartFile file) throws IOException, SQLException {
+//        log.info("getResource | user/create: " + file.getResource());
+//        log.info("getBytes | user/create: " + file.getBytes());
+////        log.info("getBytes | user/create: " + Base64.getDecoder().decode(file.getBytes()));
+//        byte[] bytes = file.getBytes();
+//        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+//
+//        UserEntity obj = new UserEntity();
+//        obj.setImage(file.getOriginalFilename());
+//        log.info("blob: " + blob);
+////        obj.setData(blob.toString());
+////        obj.setData(Base64.getDecoder().decode(file.getBytes()));
+//        repository.save(obj);
+//        return ResponseEntity.status(HttpStatus.OK).body(
+//                new ResponseObject("ok", "get full product successfully", obj)
+//        );
+//
+//    }
 
 //    @GetMapping(path = { "/get/{userName}" })
 //    public UserEntity getImage(@PathVariable("userName") String userName) throws IOException {
@@ -168,17 +174,28 @@ public class UserController {
 
 
     @PostMapping("/update")
-    public ApiBaseResponse updatePosts(@RequestBody UserRequest request) {
+    public ApiBaseResponse update(@RequestBody UserRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-//        List<String> list = repository.findByTitle(request.getTitle());
-//        if (list.size() > 0) {
-//            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-//            apiBaseResponse.setOptional(1l);
-//            apiBaseResponse.setErrorDescription("Bài viết đã tồn tại trong hệ thống");
-//            apiBaseResponse.setData(request);
-//            return apiBaseResponse;
-//        }
         boolean rs = userService.update(request);
+        if (!rs) {
+            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+            apiBaseResponse.setErrorDescription("Cập nhật bài viết không thành công");
+            apiBaseResponse.setData(request);
+            apiBaseResponse.setOptional(1l);
+            return apiBaseResponse;
+
+        }
+        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
+        apiBaseResponse.setErrorDescription("Cập nhật bài viết thành công");
+        apiBaseResponse.setData(request);
+        apiBaseResponse.setOptional(1l);
+        return apiBaseResponse;
+    }
+
+    @PostMapping("/updateInfo")
+    public ApiBaseResponse updateInfo(@RequestBody UserRequest request) {
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        boolean rs = userService.updateInfo(request);
         if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Cập nhật bài viết không thành công");

@@ -16,6 +16,7 @@ public class PostsResponse {
     private Long status;
     private String imagePath;
     private Long userId;
+    private String hashTag;
     private String createdAt;
     private String updatedAt;
 

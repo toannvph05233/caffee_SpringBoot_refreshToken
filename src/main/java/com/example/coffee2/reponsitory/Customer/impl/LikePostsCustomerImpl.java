@@ -78,7 +78,8 @@ public class LikePostsCustomerImpl implements LikePostsCustomer {
             sql.append("f.id, \n");
             sql.append("f.user_id, \n");
             sql.append("f.post_id, \n");
-            sql.append("f.is_like \n");
+            sql.append("f.is_like, \n");
+            sql.append("f.is_save \n");
         }
         sql.append("from \n");
         sql.append("like_posts f \n");

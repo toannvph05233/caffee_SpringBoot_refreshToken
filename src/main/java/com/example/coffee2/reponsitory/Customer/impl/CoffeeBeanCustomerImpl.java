@@ -83,11 +83,15 @@ public class CoffeeBeanCustomerImpl implements CoffeeBeanCustomer {
             sql.append("f.origin, \n");
             sql.append("f.planting_instructions, \n");
             sql.append("f.status, \n");
-            sql.append("f.content_coffee \n");
-//            sql.append("f.slug \n");
+            sql.append("f.content_coffee, \n");
+            sql.append("f.image \n");
         }
         sql.append("from \n");
         sql.append("coffee_bean f \n");
         sql.append("where f.status != -1 \n");
+        if (request.getName() != null) {
+            sql.append("and name = :name \n");
+            params.put("name", request.getName());
+        }
     }
 }

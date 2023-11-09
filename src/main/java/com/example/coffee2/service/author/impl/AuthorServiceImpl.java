@@ -31,6 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     public boolean registerAuthor(UserDto userDto) {
         try {
             List<String> checkNameExist = userRepository.findAllUserName();
+            //???
             if (checkNameExist.contains(userDto.getUserName())) {
                 log.error("Tài khoản đã tồn tại");
                 return false;
@@ -40,8 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
             user.setPassWord(passwordEncoder.encode(userDto.getPassWord()));
             // Cài đặt các trường dữ liệu khác từ userDto (ví dụ: email, tên, địa chỉ, v.v.)
             user.setEmail(userDto.getEmail());
-            user.setFirstName(userDto.getFirstName());
-            user.setLastName(userDto.getLastName());
+            user.setName(userDto.getName());
             user.setStatus(1L);
             user.setRole(1L);
             // Lưu user vào cơ sở dữ liệu và trả về user đã được lưu

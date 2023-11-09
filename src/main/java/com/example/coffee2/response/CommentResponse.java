@@ -12,4 +12,5 @@ public class CommentResponse {
     private String createAt;
     private String updateAt;
     private Long likeComment;
+    private Long status;
 }

@@ -49,6 +49,7 @@ public class LikePostsServiceImpl implements LikePostsService {
             obj.setUserId(request.getUserId());
             obj.setPostId(request.getPostId());
             obj.setIsLike(request.getIsLike());
+            obj.setIsSave(request.getIsSave());
             repository.save(obj);
             return true;
         } catch (Exception e) {

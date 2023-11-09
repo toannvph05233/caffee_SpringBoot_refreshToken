@@ -10,8 +10,7 @@ public class UserRequest {
     private String userName;
     private String passWord;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
     private Long age;
     private Long role;
@@ -21,7 +20,7 @@ public class UserRequest {
     private String createDate;
     private Long status;
     private String image;
-    private String data;
+//    private String data;
 //    private byte[] data;
 
     private int pageIndex;

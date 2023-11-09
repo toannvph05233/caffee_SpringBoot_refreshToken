@@ -8,8 +8,7 @@ public class UserDto {
     private String userName;
     private String passWord;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
     private int age;
     private int role;
@@ -19,13 +18,12 @@ public class UserDto {
     private Date createDate;
     private int status;
 
-    public UserDto(Long id, String userName, String passWord, String email, String firstName, String lastName, String address, int age, int role, int phoneNumber, Date dateOfBirth, int sex, Date createDate, int status) {
+    public UserDto(Long id, String userName, String passWord, String email, String name, String address, int age, int role, int phoneNumber, Date dateOfBirth, int sex, Date createDate, int status) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.address = address;
         this.age = age;
         this.role = role;
@@ -72,20 +70,12 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -159,8 +149,7 @@ public class UserDto {
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
                 ", role=" + role +

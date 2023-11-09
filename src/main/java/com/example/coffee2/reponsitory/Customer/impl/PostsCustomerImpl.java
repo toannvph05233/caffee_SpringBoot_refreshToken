@@ -109,7 +109,8 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
             sql.append("f.image_path, \n");
             sql.append("f.user_id, \n");
             sql.append("f.created_at, \n");
-            sql.append("f.updated_at \n");
+            sql.append("f.updated_at, \n");
+            sql.append("f.hash_tag \n");
         }
         sql.append("from \n");
         sql.append("posts f \n");

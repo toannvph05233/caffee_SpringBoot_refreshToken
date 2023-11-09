@@ -16,9 +16,11 @@ public interface UserService {
 
     Long getCountListUser(UserRequest request);
 
-    boolean create(UserRequest resquest, MultipartFile file);
+    boolean create(UserRequest request);
 
-    boolean update(UserRequest resquest);
+    boolean update(UserRequest request);
 
-    boolean delete(UserRequest resquest);
+    boolean updateInfo(UserRequest request);
+
+    boolean delete(UserRequest request);
 }

@@ -22,4 +22,7 @@ public class LikePostsEntity {
 
     @Column(name = "is_like")
     private Long isLike;
+
+    @Column(name = "is_save")
+    private Long isSave;
 }
