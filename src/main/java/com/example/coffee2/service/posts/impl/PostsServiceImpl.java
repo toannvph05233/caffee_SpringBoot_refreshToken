@@ -2,6 +2,7 @@ package com.example.coffee2.service.posts.impl;
 
 import com.example.coffee2.entity.PostsEntity;
 import com.example.coffee2.reponsitory.PostsRepository;
+import com.example.coffee2.request.LikePostsRequest;
 import com.example.coffee2.request.PostsRequest;
 import com.example.coffee2.response.PostsResponse;
 import com.example.coffee2.reponsitory.Customer.PostsRespositoryCustomer;
@@ -37,6 +38,11 @@ public class PostsServiceImpl implements PostsService {
     }
 
     @Override
+    public Long getTotalPosts(PostsRequest request) {
+        return postsRespositoryCustomer.getTotalPosts(request);
+    }
+
+    @Override
     public boolean create(PostsRequest request) {
         Date now = new Date();
         try {
@@ -58,7 +64,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setUserId(request.getUserId());
             obj.setCreatedAt(now);
             obj.setUpdatedAt(null);
-            obj.setHashTag(request.getHashTag());
+            obj.setCategory(request.getCategory());
             repository.save(obj);
             return true;
         } catch (Exception e) {
@@ -89,7 +95,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
             obj.setUpdatedAt(now);
 //            obj.setTotalComment(request.getTotalComment());
-            obj.setHashTag(request.getHashTag());
+            obj.setCategory(request.getCategory());
             repository.save(obj);
             return true;
         } catch (Exception e) {

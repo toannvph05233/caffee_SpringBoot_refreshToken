@@ -11,4 +11,6 @@ public interface CommentCustomer {
     List<CommentResponse> getListComment(CommentRequest request);
 
     Long getCountListComment(CommentRequest request);
+
+    Long getTotalCommentPosts(CommentRequest request);
 }

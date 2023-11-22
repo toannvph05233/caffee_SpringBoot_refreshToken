@@ -33,28 +33,31 @@ public class LikePostsServiceImpl implements LikePostsService {
     }
 
     @Override
-    public boolean isLike(LikePostsRequest request) {
+    public Long getTotalLikePosts(LikePostsRequest request) {
+        return likePostsCustomer.getTotalLikePosts(request);
+    }
+
+    @Override
+    public boolean update(LikePostsRequest request) {
         try {
-//            List<LikePostsEntity> postId = repository.findByPostId(request.getPostId());
-//            List<LikePostsEntity> userId = repository.findByUserId(request.getUserId());
-            List<LikePostsEntity> checkExist = repository.findAllByPostIdAndUserId(request.getPostId(), request.getUserId());
             LikePostsEntity obj1 = repository.findByPostIdAndUserId(request.getPostId(), request.getUserId());
-//            if (checkExist.contains(obj1)) {
-            if (obj1 != null) {
-                obj1.setIsLike(request.getIsLike());
-                repository.save(obj1);
+            List<LikePostsEntity> checkExist = repository.findAllByPostIdAndUserId(request.getPostId(), request.getUserId());
+            if (checkExist.contains(obj1)) {
+                repository.delete(obj1);
                 return true;
             }
-            LikePostsEntity obj = new LikePostsEntity();
-            obj.setUserId(request.getUserId());
-            obj.setPostId(request.getPostId());
-            obj.setIsLike(request.getIsLike());
-            obj.setIsSave(request.getIsSave());
-            repository.save(obj);
-            return true;
+            if (obj1 == null) {
+                LikePostsEntity obj = new LikePostsEntity();
+                obj.setUserId(request.getUserId());
+                obj.setPostId(request.getPostId());
+                obj.setIsLike(1L);
+                repository.save(obj);
+                return true;
+            }
         } catch (Exception e) {
             log.error("not success: " + e.getMessage());
             return false;
         }
+        return false;
     }
 }

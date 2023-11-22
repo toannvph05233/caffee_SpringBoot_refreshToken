@@ -23,6 +23,15 @@ public class CommentController {
     private CommentService commentService;
 
 
+    @PostMapping("/searchTotalCommentPost")
+    public ApiBaseResponse getTotalLikePost(@RequestBody CommentRequest request) {
+        Long count = commentService.getTotalCommentPosts(request);
+        log.info("count: " + count);
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        apiBaseResponse.setOptional(count);
+        return apiBaseResponse;
+    }
+
     @PostMapping("/search")
     public ApiBaseResponse getListLikePosts(@RequestBody CommentRequest request) {
         List<CommentResponse> listResult = commentService.getListComment(request);
@@ -46,10 +55,12 @@ public class CommentController {
             apiBaseResponse.setOptional(1L);
             return apiBaseResponse;
         }
+        Long count = commentService.getCountListComment(request);
         apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
         apiBaseResponse.setErrorDescription("Thêm mới bình luận thành công");
         apiBaseResponse.setData(request);
-        apiBaseResponse.setOptional(1L);
+        apiBaseResponse.setOptional(count);
+
         return apiBaseResponse;
     }
 }

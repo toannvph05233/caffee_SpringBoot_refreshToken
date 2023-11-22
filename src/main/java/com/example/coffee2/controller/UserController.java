@@ -91,86 +91,8 @@ public class UserController {
         apiBaseResponse.setErrorDescription("Tạo mới tài khoản thành công");
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(1L);
-        log.info("response: " + request);
         return apiBaseResponse;
     }
-
-    // compress the image bytes before storing it in the database
-//    public static byte[] compressBytes(byte[] data) {
-//        Deflater deflater = new Deflater();
-//        deflater.setInput(data);
-//        deflater.finish();
-//
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-//        byte[] buffer = new byte[1024];
-//        while (!deflater.finished()) {
-//            int count = deflater.deflate(buffer);
-//            outputStream.write(buffer, 0, count);
-//        }
-//        try {
-//            outputStream.close();
-//        } catch (IOException e) {
-//        }
-//        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
-//
-//        return outputStream.toByteArray();
-//    }
-//
-//    // uncompress the image bytes before returning it to the angular application
-//    public static byte[] decompressBytes(byte[] data) {
-//        Inflater inflater = new Inflater();
-//        inflater.setInput(data);
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-//        byte[] buffer = new byte[1024];
-//        try {
-//            while (!inflater.finished()) {
-//                int count = inflater.inflate(buffer);
-//                outputStream.write(buffer, 0, count);
-//            }
-//            outputStream.close();
-//        } catch (IOException ioe) {
-//        } catch (DataFormatException e) {
-//        }
-//        return outputStream.toByteArray();
-//    }
-
-//    @PostMapping("/upload")
-//    public ResponseEntity.BodyBuilder uploadImage(@RequestPart("imageFile") MultipartFile file) throws IOException {
-//        log.info("file: " + file);
-////        UserEntity img = new UserEntity(file.getOriginalFilename(), file.getContentType(),
-////                compressBytes(file.getBytes()));
-//        UserEntity img = new UserEntity(compressBytes(file.getBytes()));
-//        repository.save(img);
-//        return ResponseEntity.status(HttpStatus.OK);
-//    }
-
-//    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<ResponseObject> create(@RequestParam("file") MultipartFile file) throws IOException, SQLException {
-//        log.info("getResource | user/create: " + file.getResource());
-//        log.info("getBytes | user/create: " + file.getBytes());
-////        log.info("getBytes | user/create: " + Base64.getDecoder().decode(file.getBytes()));
-//        byte[] bytes = file.getBytes();
-//        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-//
-//        UserEntity obj = new UserEntity();
-//        obj.setImage(file.getOriginalFilename());
-//        log.info("blob: " + blob);
-////        obj.setData(blob.toString());
-////        obj.setData(Base64.getDecoder().decode(file.getBytes()));
-//        repository.save(obj);
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                new ResponseObject("ok", "get full product successfully", obj)
-//        );
-//
-//    }
-
-//    @GetMapping(path = { "/get/{userName}" })
-//    public UserEntity getImage(@PathVariable("userName") String userName) throws IOException {
-//
-//        final Optional<UserEntity> retrievedImage = repository.findByUserName1(userName);
-//        UserEntity img = new UserEntity(decompressBytes(retrievedImage.get().getData()));
-//        return img;
-//    }
 
 
     @PostMapping("/update")

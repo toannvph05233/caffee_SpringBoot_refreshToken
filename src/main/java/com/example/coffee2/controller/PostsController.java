@@ -4,6 +4,7 @@ package com.example.coffee2.controller;
 import com.example.coffee2.entity.PostsEntity;
 import com.example.coffee2.entity.ResponseObject;
 import com.example.coffee2.reponsitory.PostsRepository;
+import com.example.coffee2.request.LikePostsRequest;
 import com.example.coffee2.request.PostsRequest;
 import com.example.coffee2.response.PostsResponse;
 import com.example.coffee2.response.base.ApiBaseResponse;
@@ -37,9 +38,17 @@ public class PostsController {
         );
     }
 
+    @PostMapping("/searchTotalPost")
+    public ApiBaseResponse getTotalPost(@RequestBody PostsRequest request) {
+        Long count = postsService.getTotalPosts(request);
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        apiBaseResponse.setOptional(count);
+        return apiBaseResponse;
+    }
+
     @PostMapping("/search")
 //    public ResponseEntity<?> getListPosts(@RequestBody PostsRequest request) {
-        public ApiBaseResponse getListPosts(@RequestBody PostsRequest request) {
+    public ApiBaseResponse getListPosts(@RequestBody PostsRequest request) {
         List<PostsResponse> listResult = postsService.getListPosts(request);
         Long count = postsService.getCountListPosts(request);
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -51,6 +60,23 @@ public class PostsController {
 //        return new ResponseEntity<> (HttpStatus.OK);
         return apiBaseResponse;
     }
+
+    @GetMapping("/search-list-category")
+    ResponseEntity<ResponseObject> searchListCategory() {
+        List<String> listCategory = repository.getListCategory();
+        log.info("listCategory: " + listCategory);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", listCategory));
+    }
+
+//    @PostMapping("/search-item-category")
+//    ApiBaseResponse searchItemCategory(@RequestBody PostsRequest request) {
+//        List<PostsResponse> listResult = postsService.getListPosts(request);
+//        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+//        apiBaseResponse.setData(listResult);
+//
+//        return apiBaseResponse;
+//    }
+
 
     @PostMapping("/search/{title}")
     ResponseEntity<ResponseObject> findByIdPost(@PathVariable String title) {
@@ -82,7 +108,6 @@ public class PostsController {
         apiBaseResponse.setErrorDescription("Tạo mới bài viết thành công");
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(1L);
-        log.info("response: " + request);
         return apiBaseResponse;
     }
 

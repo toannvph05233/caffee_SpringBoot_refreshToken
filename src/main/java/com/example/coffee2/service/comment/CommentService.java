@@ -12,6 +12,8 @@ public interface CommentService {
 
     Long getCountListComment(CommentRequest request);
 
+    Long getTotalCommentPosts(CommentRequest request);
+
     boolean create(CommentRequest request);
 
     boolean update(CommentRequest request);

@@ -90,7 +90,7 @@ public class CoffeeBeanCustomerImpl implements CoffeeBeanCustomer {
         sql.append("coffee_bean f \n");
         sql.append("where f.status != -1 \n");
         if (request.getName() != null) {
-            sql.append("and name = :name \n");
+            sql.append("and f.name = :name \n");
             params.put("name", request.getName());
         }
     }

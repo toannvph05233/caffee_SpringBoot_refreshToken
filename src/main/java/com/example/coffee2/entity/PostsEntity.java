@@ -49,8 +49,8 @@ public class PostsEntity {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "hash_tag")
-    private String hashTag;
+    @Column(name = "category")
+    private String category;
 
 
 //    @Override

@@ -45,7 +45,6 @@ public class CoffeeBeanController {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         apiBaseResponse.setData(listResult);
         apiBaseResponse.setOptional(count);
-        log.info("response: " + listResult);
         return apiBaseResponse;
     }
 

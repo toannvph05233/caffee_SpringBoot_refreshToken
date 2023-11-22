@@ -93,5 +93,17 @@ public class UserCustomerImpl implements UserCustomer {
         sql.append("from \n");
         sql.append("user1 f \n");
         sql.append("where f.status != -1 \n");
+        if (request.getUserName() != null) {
+            sql.append("and user_name = :userName");
+            params.put("userName", request.getUserName());
+        }
+        if (request.getName() != null) {
+            sql.append("and name = :name");
+            params.put("name", request.getName());
+        }
+        if (request.getAddress() != null) {
+            sql.append("and address = :address");
+            params.put("address", request.getAddress());
+        }
     }
 }

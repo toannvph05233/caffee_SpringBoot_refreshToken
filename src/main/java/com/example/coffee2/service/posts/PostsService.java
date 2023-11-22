@@ -11,6 +11,8 @@ public interface PostsService {
     List<PostsResponse> getListPosts(PostsRequest request);
     Long getCountListPosts(PostsRequest request);
 
+    Long getTotalPosts(PostsRequest request);
+
     boolean create(PostsRequest request);
 
     boolean update(PostsRequest request);

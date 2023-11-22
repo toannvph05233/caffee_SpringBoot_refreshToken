@@ -28,6 +28,14 @@ public class LikePostsController {
     @Autowired
     private LikePostsService likePostsService;
 
+    @PostMapping("/searchTotalLikePost")
+    public ApiBaseResponse getTotalLikePost(@RequestBody LikePostsRequest request) {
+        Long count = likePostsService.getTotalLikePosts(request);
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        apiBaseResponse.setOptional(count);
+        return apiBaseResponse;
+    }
+
     @PostMapping("/search")
     public ApiBaseResponse getListLikePosts(@RequestBody LikePostsRequest request) {
         List<LikePostsResponse> listResult = likePostsService.getListLikePosts(request);
@@ -39,11 +47,11 @@ public class LikePostsController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/update")
+    @PostMapping("/create")
     public ApiBaseResponse isLike(@RequestBody LikePostsRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-        boolean rs = likePostsService.isLike(request);
-        if(!rs) {
+        boolean rs = likePostsService.update(request);
+        if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Xảy ra lỗi khi thích bài viết");
             apiBaseResponse.setData(request);
@@ -54,6 +62,7 @@ public class LikePostsController {
         apiBaseResponse.setErrorDescription("Thích bài viết thành công");
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(1L);
+        Long count = likePostsService.getCountListLikePosts(request);
         return apiBaseResponse;
     }
 

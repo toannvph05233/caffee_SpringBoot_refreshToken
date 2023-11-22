@@ -12,4 +12,7 @@ public interface LikePostsCustomer {
     List<LikePostsResponse> getListLikePosts(LikePostsRequest request);
 
     Long getCountListLikePosts(LikePostsRequest request);
+
+    Long getTotalLikePosts(LikePostsRequest request);
+
 }

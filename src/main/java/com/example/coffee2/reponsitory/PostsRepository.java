@@ -21,6 +21,12 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
     List<String> findByTitle(@RequestParam String title);
 
     @Query(
+            value = "select DISTINCT category from posts",
+            nativeQuery = true
+    )
+    List<String> getListCategory();
+
+    @Query(
             value = "select e.id from posts e where e.id = :id",
             nativeQuery = true
     )
@@ -28,7 +34,6 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
 
 
 //    List<String> findAllByName(@RequestParam String name);
-
 
 
 }

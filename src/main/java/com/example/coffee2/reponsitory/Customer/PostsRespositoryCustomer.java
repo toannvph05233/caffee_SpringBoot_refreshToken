@@ -9,4 +9,6 @@ public interface PostsRespositoryCustomer {
     List<PostsResponse> getListPosts(PostsRequest request);
 
     Long getCountListPosts(PostsRequest request);
+
+    Long getTotalPosts(PostsRequest request);
 }

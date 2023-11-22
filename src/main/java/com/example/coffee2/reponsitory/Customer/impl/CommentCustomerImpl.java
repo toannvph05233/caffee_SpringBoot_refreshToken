@@ -32,7 +32,7 @@ public class CommentCustomerImpl implements CommentCustomer {
         try {
             StringBuilder sql = new StringBuilder();
             Map<String, Object> params = new HashMap<>();
-            createSqlGetListLikePosts(request, sql, params, false);
+            createSqlGetListCommentPosts(request, sql, params, false);
             Query query = entityManager.createNativeQuery(sql.toString());
             if (params.size() > 0) {
                 params.forEach((key, value) -> {
@@ -55,7 +55,7 @@ public class CommentCustomerImpl implements CommentCustomer {
         try {
             StringBuilder sql = new StringBuilder();
             Map<String, Object> params = new HashMap<>();
-            createSqlGetListLikePosts(request, sql, params, true);
+            createSqlGetListCommentPosts(request, sql, params, true);
             Query query = entityManager.createNativeQuery(sql.toString());
             if (params.size() > 0) {
                 params.forEach((key, value) -> {
@@ -72,9 +72,20 @@ public class CommentCustomerImpl implements CommentCustomer {
         return null;
     }
 
-    private void createSqlGetListLikePosts(CommentRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
+
+    private void createSqlGetListCommentPosts(CommentRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
         if (isCount) {
             sql.append("select count(*) \n");
+            sql.append("from \n");
+            sql.append("comment f \n");
+//            sql.append("where f.status = 1 \n");
+            if (request.getPostId() != null) {
+                sql.append(" where 1=1 ");
+                sql.append(" and f.post_id = :postId \n");
+                params.put("postId", request.getPostId());
+                sql.append("update dbo.posts set total_comment = (select count(comment_id) from comment where post_id= :postId ) where id= :postId");
+                params.put("postId", request.getPostId());
+            }
         } else {
             sql.append("select \n");
             sql.append("f.id, \n");
@@ -86,9 +97,38 @@ public class CommentCustomerImpl implements CommentCustomer {
             sql.append("f.update_at, \n");
             sql.append("f.like_comment, \n");
             sql.append("f.status \n");
+            sql.append("from \n");
+            sql.append("comment f \n");
+            sql.append("where f.status = 1 \n");
         }
-        sql.append("from \n");
-        sql.append("comment f \n");
-        sql.append("where f.status = 1 \n");
+
+    }
+
+    public Long getTotalCommentPosts(CommentRequest request) {
+        try {
+            StringBuilder sql = new StringBuilder();
+            Map<String, Object> params = new HashMap<>();
+            createSqlGetTotalCommentPosts(request, sql, params);
+            Query query = entityManager.createNativeQuery(sql.toString());
+            if (params.size() > 0) {
+                params.forEach((key, value) -> {
+                    query.setParameter(key, value);
+                });
+            }
+
+            Long count = ((Integer) query.getSingleResult()).longValue();
+            log.info("getCountListPosts | count  " + count);
+            return count;
+        } catch (Exception e) {
+            log.error("error2: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void createSqlGetTotalCommentPosts(CommentRequest request, StringBuilder sql, Map<String, Object> params) {
+        sql.append("select sum(total_comment) from posts  \n");
+        sql.append("where 1 = 1 \n");
+        sql.append("and user_id = :userId \n");
+        params.put("userId", request.getUserId());
     }
 }

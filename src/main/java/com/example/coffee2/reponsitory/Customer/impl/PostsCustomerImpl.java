@@ -1,6 +1,7 @@
 package com.example.coffee2.reponsitory.Customer.impl;
 
 
+import com.example.coffee2.request.CommentRequest;
 import com.example.coffee2.request.PostsRequest;
 import com.example.coffee2.response.PostsResponse;
 import com.example.coffee2.reponsitory.Customer.PostsRespositoryCustomer;
@@ -30,7 +31,7 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
 //        return null;
 //    }
 
-//            @Autowired
+    //            @Autowired
 //        @Qualifier("coffeeEntityManager")
 //        private EntityManager entityManager;
 //
@@ -91,6 +92,7 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
     private void createSqlGetListPosts(PostsRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
         if (isCount) {
             sql.append("select count(*) \n");
+
         } else {
 //            sql.append("select f.* \n");
             sql.append("select \n");
@@ -110,10 +112,46 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
             sql.append("f.user_id, \n");
             sql.append("f.created_at, \n");
             sql.append("f.updated_at, \n");
-            sql.append("f.hash_tag \n");
+            sql.append("f.category \n");
         }
         sql.append("from \n");
         sql.append("posts f \n");
         sql.append("where f.status != -1 \n");
+        if (request.getCategory() != null) {
+            sql.append("and category = :category");
+            params.put("category", request.getCategory());
+        }
+        if (request.getTitle() != null) {
+            sql.append("and f.title = :title \n");
+            params.put("title", request.getTitle());
+        }
+    }
+
+    public Long getTotalPosts(PostsRequest request) {
+        try {
+            StringBuilder sql = new StringBuilder();
+            Map<String, Object> params = new HashMap<>();
+            createSqlGetTotalPosts(request, sql, params);
+            Query query = entityManager.createNativeQuery(sql.toString());
+            if (params.size() > 0) {
+                params.forEach((key, value) -> {
+                    query.setParameter(key, value);
+                });
+            }
+
+            Long count = ((Integer) query.getSingleResult()).longValue();
+            log.info("getCountListPosts | count  " + count);
+            return count;
+        } catch (Exception e) {
+            log.error("error2: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void createSqlGetTotalPosts(PostsRequest request, StringBuilder sql, Map<String, Object> params) {
+        sql.append("select sum(status) from posts  \n");
+        sql.append("where 1 = 1 \n");
+        sql.append("and user_id = :userId \n");
+        params.put("userId", request.getUserId());
     }
 }

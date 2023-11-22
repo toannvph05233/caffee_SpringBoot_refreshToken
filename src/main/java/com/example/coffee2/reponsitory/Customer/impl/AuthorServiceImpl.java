@@ -1,11 +1,10 @@
-package com.example.coffee2.service.author.impl;
+package com.example.coffee2.reponsitory.Customer.impl;
 
 import com.example.coffee2.dto.UserDto;
 import com.example.coffee2.entity.UserEntity;
 import com.example.coffee2.reponsitory.UserRespository;
 import com.example.coffee2.response.AuthResponse;
-import com.example.coffee2.response.base.ApiBaseResponse;
-import com.example.coffee2.service.author.AuthorService;
+import com.example.coffee2.reponsitory.Customer.AuthorCustomer;
 import com.example.coffee2.service.author.JwtService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Service
 @Log4j2
-public class AuthorServiceImpl implements AuthorService {
+public class AuthorServiceImpl implements AuthorCustomer {
 
     @Autowired
     private UserRespository userRepository;
@@ -61,9 +60,9 @@ public class AuthorServiceImpl implements AuthorService {
             UserEntity user = users.get(0);
             if (passwordEncoder.matches(userDto.getPassWord(), user.getPassWord())) {
                 // Authentication successful
-                String token = jwtService.generateToken(user.getUserName());
-                log.info("new AuthResponse(token, user): " + new AuthResponse(token, user));
-                return new AuthResponse(token, user);
+                String accessToken = jwtService.generateAccessToken(user.getUserName());
+                String refreshToken = jwtService.generateRefreshToken(user.getUserName());
+                return new AuthResponse(accessToken, refreshToken, user);
             }
         }
         return null;

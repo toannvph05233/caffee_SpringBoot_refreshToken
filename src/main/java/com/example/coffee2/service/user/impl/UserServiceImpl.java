@@ -68,11 +68,11 @@ public class UserServiceImpl implements UserService {
             }
             UserEntity obj = new UserEntity();
             obj.setUserName(request.getUserName());
-            obj.setPassWord(request.getPassWord());
+//            obj.setPassWord(request.getPassWord());
             obj.setEmail(request.getEmail());
             obj.setName(request.getName());
-            obj.setAddress(request.getAddress());
-            obj.setAge(request.getAge());
+//            obj.setAddress(request.getAddress());
+//            obj.setAge(request.getAge());
             obj.setRole(request.getRole());
             obj.setPhoneNumber(request.getPhoneNumber());
             obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
@@ -99,11 +99,11 @@ public class UserServiceImpl implements UserService {
                 return false;
             }
             obj.setUserName(request.getUserName());
-            obj.setPassWord(request.getPassWord());
+//            obj.setPassWord(request.getPassWord());
             obj.setEmail(request.getEmail());
             obj.setName(request.getName());
-            obj.setAddress(request.getAddress());
-            obj.setAge(request.getAge());
+//            obj.setAddress(request.getAddress());
+//            obj.setAge(request.getAge());
             obj.setRole(request.getRole());
             obj.setPhoneNumber(request.getPhoneNumber());
 //            obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));

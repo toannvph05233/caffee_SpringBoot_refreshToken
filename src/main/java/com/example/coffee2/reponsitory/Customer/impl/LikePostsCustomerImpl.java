@@ -73,16 +73,52 @@ public class LikePostsCustomerImpl implements LikePostsCustomer {
     private void createSqlGetListLikePosts(LikePostsRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
         if (isCount) {
             sql.append("select count(*) \n");
+            sql.append("from \n");
+            sql.append("like_posts f \n");
+            log.info("request.getPostId(): " + request.getPostId());
+            if (request.getPostId() != null) {
+                sql.append(" where 1=1 ");
+                sql.append(" and f.post_id = :postId \n");
+                params.put("postId", request.getPostId());
+                sql.append("update dbo.posts set total_like = (select count(is_like) from like_posts where post_id= :postId ) where id= :postId");
+                params.put("postId", request.getPostId());
+            }
         } else {
             sql.append("select \n");
             sql.append("f.id, \n");
             sql.append("f.user_id, \n");
             sql.append("f.post_id, \n");
-            sql.append("f.is_like, \n");
-            sql.append("f.is_save \n");
+            sql.append("f.is_like \n");
+            sql.append("from \n");
+            sql.append("like_posts f \n");
         }
-        sql.append("from \n");
-        sql.append("like_posts f \n");
-//        sql.append("where f.is_like = 1 \n");
+    }
+
+    public Long getTotalLikePosts(LikePostsRequest request) {
+        try {
+            StringBuilder sql = new StringBuilder();
+            Map<String, Object> params = new HashMap<>();
+            createSqlGetTotalLikePosts(request, sql, params);
+            Query query = entityManager.createNativeQuery(sql.toString());
+            if (params.size() > 0) {
+                params.forEach((key, value) -> {
+                    query.setParameter(key, value);
+                });
+            }
+
+            Long count = ((Integer) query.getSingleResult()).longValue();
+            log.info("getCountListPosts | count  " + count);
+            return count;
+        } catch (Exception e) {
+            log.error("error2: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void createSqlGetTotalLikePosts(LikePostsRequest request, StringBuilder sql, Map<String, Object> params) {
+        sql.append("select sum(total_like) from posts  \n");
+        sql.append("where 1 = 1 \n");
+        sql.append("and user_id = :userId \n");
+        params.put("userId", request.getUserId());
     }
 }

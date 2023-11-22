@@ -10,5 +10,7 @@ public interface LikePostsService {
 
     Long getCountListLikePosts(LikePostsRequest request);
 
-    boolean isLike(LikePostsRequest request);
+    Long getTotalLikePosts(LikePostsRequest request);
+
+    boolean update(LikePostsRequest request);
 }

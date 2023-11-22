@@ -35,6 +35,11 @@ public class CommentServiceImpl implements CommentService {
         return commentCustomer.getCountListComment(request);
     }
 
+    @Override
+    public Long getTotalCommentPosts(CommentRequest request) {
+        return commentCustomer.getTotalCommentPosts(request);
+    }
+
 
     @Override
     public boolean create(CommentRequest request) {
