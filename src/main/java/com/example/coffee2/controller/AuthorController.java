@@ -9,6 +9,7 @@ import com.example.coffee2.service.author.JwtService;
 import com.example.coffee2.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,14 +45,13 @@ public class AuthorController {
         return authorService.loginAuthor(userDto);
     }
 
-
     @PostMapping("/authenticate")
     public ResponseEntity<JwtToken> authenticate(@RequestHeader("Authorization") String token) {
         if (token != null && token.startsWith("Bearer ")) {
             String jwtToken = token.substring(7);
             if (jwtService.validateToken(jwtToken)) {
                 String username = jwtService.getUsernameFromToken(jwtToken);
-                // Do something with the username, e.g., authenticate the user
+//                 Do something with the username, e.g., authenticate the user
                 // ...
 
                 // Return a new token (if needed)

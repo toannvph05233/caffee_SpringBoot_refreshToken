@@ -13,7 +13,7 @@ public class UserRequest {
     private String name;
     private String address;
     private Long age;
-    private Long role;
+    private String role;
     private Long phoneNumber;
     private String dateOfBirth;
     private Long sex;

@@ -29,7 +29,7 @@ public class UserEntity {
     @Column(name = "age")
     private Long age;
     @Column(name = "role")
-    private Long role;
+    private String role;
     @Column(name = "phone_number")
     private Long phoneNumber;
     @Column(name = "date_of_birth")

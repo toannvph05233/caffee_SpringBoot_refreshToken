@@ -42,7 +42,7 @@ public class AuthorServiceImpl implements AuthorCustomer {
             user.setEmail(userDto.getEmail());
             user.setName(userDto.getName());
             user.setStatus(1L);
-            user.setRole(1L);
+            user.setRole("USER");
             // Lưu user vào cơ sở dữ liệu và trả về user đã được lưu
             userRepository.save(user);
             return true;
@@ -60,28 +60,16 @@ public class AuthorServiceImpl implements AuthorCustomer {
             UserEntity user = users.get(0);
             if (passwordEncoder.matches(userDto.getPassWord(), user.getPassWord())) {
                 // Authentication successful
+                String token = jwtService.generateToken(user.getUserName());
+
                 String accessToken = jwtService.generateAccessToken(user.getUserName());
                 String refreshToken = jwtService.generateRefreshToken(user.getUserName());
+                log.info("accessToken: " + accessToken);
+                log.info("refreshToken: " + refreshToken);
                 return new AuthResponse(accessToken, refreshToken, user);
             }
         }
         return null;
     }
-
-//    @Override
-//    public boolean loginAuthor(UserDto userDto) {
-//        List<UserEntity> users = userRepository.findByUserName(userDto.getUserName());
-//        if (!users.isEmpty()) {
-//            UserEntity user = users.get(0);
-//            if (passwordEncoder.matches(userDto.getPassWord(), user.getPassWord())) {
-//                // Authentication successful
-//                String token = jwtService.generateToken(user.getUserName());
-//                log.info("new AuthResponse(token, user): " + new AuthResponse(token, user));
-//                return true;
-//            }
-//            return false;
-//        }
-//        return false;
-//    }
 
 }

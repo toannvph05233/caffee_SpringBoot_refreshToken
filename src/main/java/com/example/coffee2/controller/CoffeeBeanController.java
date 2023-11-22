@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/coffee")
 public class CoffeeBeanController {
     @Autowired
@@ -48,6 +48,7 @@ public class CoffeeBeanController {
         return apiBaseResponse;
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
 //    @PreAuthorize("hasRole()")
     public ApiBaseResponse create(@RequestBody CoffeeBeanRequest request) {

@@ -25,7 +25,7 @@ public class JwtService {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    private static final String SECRET_KEY = "your-secret-key";
+    private static final String SECRET_KEY = "a123";
     private static final long ACCESS_TOKEN_EXPIRATION = 90000000; // 15 minutes
     private static final long REFRESH_TOKEN_EXPIRATION = 2104800000; // 1 week
 
@@ -33,7 +33,8 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+//                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(key)
                 .compact();
     }
 
@@ -41,7 +42,8 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+//                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(key)
                 .compact();
     }
 
