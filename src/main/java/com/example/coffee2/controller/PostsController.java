@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/posts")
 public class PostsController {
     @Autowired
@@ -64,7 +64,6 @@ public class PostsController {
     @GetMapping("/search-list-category")
     ResponseEntity<ResponseObject> searchListCategory() {
         List<String> listCategory = repository.getListCategory();
-        log.info("listCategory: " + listCategory);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", listCategory));
     }
 

@@ -15,13 +15,14 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/equipment")
 public class EquipmentController {
     @Autowired
@@ -30,6 +31,7 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("")
     ResponseEntity<ResponseObject> findAllEquipment() {
         List<EquipmentEntity> foundProduct = repository.findAllEquipment();
@@ -38,6 +40,7 @@ public class EquipmentController {
         );
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/search")
     public ApiBaseResponse getListEquipment(@RequestBody EquipmentRequest request) {
         List<EquipmentResponse> listResult = equipmentService.getListEquipment(request);
@@ -48,6 +51,7 @@ public class EquipmentController {
         return apiBaseResponse;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     public ApiBaseResponse create(@RequestBody EquipmentRequest request){
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -74,6 +78,7 @@ public class EquipmentController {
         return apiBaseResponse;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/update")
     public ApiBaseResponse update(@RequestBody EquipmentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -92,6 +97,7 @@ public class EquipmentController {
         return apiBaseResponse;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/delete")
     public ApiBaseResponse delete(@RequestBody EquipmentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();

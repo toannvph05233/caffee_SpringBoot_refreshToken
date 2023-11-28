@@ -1,5 +1,6 @@
 package com.example.coffee2.controller;
 
+import com.example.coffee2.request.CoffeeBeanRequest;
 import com.example.coffee2.request.CommentRequest;
 import com.example.coffee2.request.EquipmentRequest;
 import com.example.coffee2.request.LikePostsRequest;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/comment")
 public class CommentController {
     @Autowired
@@ -35,7 +36,6 @@ public class CommentController {
     @PostMapping("/search")
     public ApiBaseResponse getListLikePosts(@RequestBody CommentRequest request) {
         List<CommentResponse> listResult = commentService.getListComment(request);
-        log.info("listResult | comment | search: " + listResult);
         Long count = commentService.getCountListComment(request);
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         apiBaseResponse.setData(listResult);
@@ -61,6 +61,42 @@ public class CommentController {
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(count);
 
+        return apiBaseResponse;
+    }
+
+    @PostMapping("/update")
+    public ApiBaseResponse update(@RequestBody CommentRequest request) {
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        boolean rs = commentService.update(request);
+        if(!rs) {
+            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+            apiBaseResponse.setErrorDescription("Chỉnh sửa bình luận không thành công");
+            apiBaseResponse.setData(request);
+            apiBaseResponse.setOptional(1L);
+            return apiBaseResponse;
+        }
+        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
+        apiBaseResponse.setErrorDescription("Chỉnh sửa bình luận thành công");
+        apiBaseResponse.setData(request);
+        apiBaseResponse.setOptional(1L);
+        return apiBaseResponse;
+    }
+
+    @PostMapping("/delete")
+    public ApiBaseResponse delete(@RequestBody CommentRequest request) {
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        boolean rs = commentService.delete(request);
+        if(!rs) {
+            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+            apiBaseResponse.setErrorDescription("Xóa bình luận không thành công");
+            apiBaseResponse.setData(request);
+            apiBaseResponse.setOptional(1L);
+            return apiBaseResponse;
+        }
+        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
+        apiBaseResponse.setErrorDescription("Xóa bình luận thành công");
+        apiBaseResponse.setData(request);
+        apiBaseResponse.setOptional(1L);
         return apiBaseResponse;
     }
 }

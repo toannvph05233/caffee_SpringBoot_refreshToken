@@ -17,4 +17,6 @@ public interface CommentService {
     boolean create(CommentRequest request);
 
     boolean update(CommentRequest request);
+
+    boolean delete(CommentRequest request);
 }

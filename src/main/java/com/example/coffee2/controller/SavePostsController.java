@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/save-posts")
 public class SavePostsController {
     @Autowired

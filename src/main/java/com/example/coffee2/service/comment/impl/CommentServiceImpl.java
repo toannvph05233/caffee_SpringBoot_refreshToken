@@ -4,9 +4,7 @@ import com.example.coffee2.entity.CommentEntity;
 import com.example.coffee2.reponsitory.CommentRepository;
 import com.example.coffee2.reponsitory.Customer.CommentCustomer;
 import com.example.coffee2.request.CommentRequest;
-import com.example.coffee2.request.LikePostsRequest;
 import com.example.coffee2.response.CommentResponse;
-import com.example.coffee2.response.LikePostsResponse;
 import com.example.coffee2.service.comment.CommentService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomUtils;
@@ -46,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
         Date now = new Date();
         try {
             CommentEntity obj = new CommentEntity();
-            obj.setCommentId(RandomUtils.nextLong(100000000, 1000000000));
+            obj.setCommentId(request.getCommentId());
             obj.setUserId(request.getUserId());
             obj.setPostId(request.getPostId());
             obj.setCommentText(request.getCommentText());
@@ -65,6 +63,40 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean update(CommentRequest request) {
-        return false;
+        Date now = new Date();
+
+        try {
+            CommentEntity obj = commentRepository.findById(request.getId()).orElse(null);
+            obj.setCommentId(request.getCommentId());
+            obj.setUserId(request.getUserId());
+            obj.setPostId(request.getPostId());
+            obj.setCommentText(request.getCommentText());
+            obj.setCreateAt(request.getCreateAt());
+            obj.setUpdateAt(String.valueOf(now));
+            obj.setLikeComment(request.getLikeComment());
+            obj.setStatus(request.getStatus());
+            commentRepository.save(obj);
+            return true;
+        } catch (Exception e) {
+            log.error("error: " + e.getMessage());
+            return false;
+        }
+
+
+    }
+
+    @Override
+    public boolean delete(CommentRequest request) {
+        try {
+            CommentEntity obj = commentRepository.findById(request.getId()).orElse(null);
+            obj.setStatus(-1L);
+            commentRepository.save(obj);
+            return true;
+        } catch (Exception e) {
+            log.error("error: " + e.getMessage());
+            return false;
+        }
+
+
     }
 }

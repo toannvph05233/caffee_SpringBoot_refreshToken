@@ -33,7 +33,7 @@ import java.util.zip.Inflater;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/user")
 public class UserController {
     @Autowired

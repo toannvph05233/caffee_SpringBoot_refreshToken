@@ -62,7 +62,6 @@ public class LikePostsCustomerImpl implements LikePostsCustomer {
             }
 
             Long count = ((Integer) query.getSingleResult()).longValue();
-            log.info("getCountListPosts | count  " + count);
             return count;
         } catch (Exception e) {
             log.error("error2: " + e.getMessage());
@@ -75,7 +74,6 @@ public class LikePostsCustomerImpl implements LikePostsCustomer {
             sql.append("select count(*) \n");
             sql.append("from \n");
             sql.append("like_posts f \n");
-            log.info("request.getPostId(): " + request.getPostId());
             if (request.getPostId() != null) {
                 sql.append(" where 1=1 ");
                 sql.append(" and f.post_id = :postId \n");
@@ -107,7 +105,6 @@ public class LikePostsCustomerImpl implements LikePostsCustomer {
             }
 
             Long count = ((Integer) query.getSingleResult()).longValue();
-            log.info("getCountListPosts | count  " + count);
             return count;
         } catch (Exception e) {
             log.error("error2: " + e.getMessage());

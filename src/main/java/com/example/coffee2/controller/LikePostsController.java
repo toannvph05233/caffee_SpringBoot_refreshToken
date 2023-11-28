@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "api/LikePosts")
 public class LikePostsController {
     @Autowired
@@ -39,7 +39,6 @@ public class LikePostsController {
     @PostMapping("/search")
     public ApiBaseResponse getListLikePosts(@RequestBody LikePostsRequest request) {
         List<LikePostsResponse> listResult = likePostsService.getListLikePosts(request);
-        log.info("listResult | LikePosts | search: " + listResult);
         Long count = likePostsService.getCountListLikePosts(request);
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         apiBaseResponse.setData(listResult);

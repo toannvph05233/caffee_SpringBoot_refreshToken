@@ -59,7 +59,6 @@ public class UserCustomerImpl implements UserCustomer {
             }
 
             Long count = ((Integer) query.getSingleResult()).longValue();
-            log.info("getCountListPosts | count  " + count);
             return count;
         } catch (Exception e) {
             log.error("error2: " + e.getMessage());

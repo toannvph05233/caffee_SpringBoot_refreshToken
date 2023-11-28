@@ -81,7 +81,6 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
 //                query.setMaxResults(request.getPageSize());
 //            }
             Long count = ((Integer) query.getSingleResult()).longValue();
-            log.info("getCountListPosts | count  " + count);
             return count;
         } catch (Exception e) {
             log.error("error2: " + e.getMessage());
@@ -125,6 +124,10 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
             sql.append("and f.title = :title \n");
             params.put("title", request.getTitle());
         }
+        if (request.getUserId() != null) {
+            sql.append("and f.user_id = :userId \n");
+            params.put("userId", request.getUserId());
+        }
     }
 
     public Long getTotalPosts(PostsRequest request) {
@@ -140,7 +143,6 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
             }
 
             Long count = ((Integer) query.getSingleResult()).longValue();
-            log.info("getCountListPosts | count  " + count);
             return count;
         } catch (Exception e) {
             log.error("error2: " + e.getMessage());

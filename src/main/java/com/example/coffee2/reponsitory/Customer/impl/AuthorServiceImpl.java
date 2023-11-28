@@ -63,10 +63,9 @@ public class AuthorServiceImpl implements AuthorCustomer {
                 String token = jwtService.generateToken(user.getUserName());
 
                 String accessToken = jwtService.generateAccessToken(user.getUserName());
-                String refreshToken = jwtService.generateRefreshToken(user.getUserName());
                 log.info("accessToken: " + accessToken);
-                log.info("refreshToken: " + refreshToken);
-                return new AuthResponse(accessToken, refreshToken, user);
+//                String refreshToken = jwtService.generateRefreshToken(user.getUserName());
+                return new AuthResponse(accessToken, user);
             }
         }
         return null;

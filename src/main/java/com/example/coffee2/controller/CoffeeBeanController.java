@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/coffee")
 public class CoffeeBeanController {
     @Autowired

@@ -9,15 +9,15 @@ public class AuthResponse {
     public String refreshToken;
     public UserEntity user;
 
-//    public AuthResponse(String token, UserEntity user) {
-//        this.token = token;
-//        this.user = user;
-//    }
-
-    public AuthResponse(String accessToken, String refreshToken, UserEntity user) {
+    public AuthResponse(String accessToken, UserEntity user) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
         this.user = user;
     }
+
+//    public AuthResponse(String accessToken, String refreshToken, UserEntity user) {
+//        this.accessToken = accessToken;
+//        this.refreshToken = refreshToken;
+//        this.user = user;
+//    }
 
 }

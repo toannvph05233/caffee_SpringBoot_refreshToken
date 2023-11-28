@@ -23,4 +23,6 @@ public class LikeCommentEntity {
     @Column(name = "is_like_comment")
     private Long isLikeComment;
 
+    @Column(name = "post_id")
+    private Long postId;
 }

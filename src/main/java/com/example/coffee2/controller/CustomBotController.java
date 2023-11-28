@@ -21,7 +21,7 @@ import java.net.URL;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "bot")
 public class CustomBotController {
 
@@ -38,7 +38,7 @@ public class CustomBotController {
     @GetMapping("/chat")
     public String chat(@RequestParam("prompt") String prompt) {
         ChatGPTRequest request = new ChatGPTRequest(model, prompt);
-        ChatGptResponse chatGptResponse = template.postForObject("openai.api.url", request, ChatGptResponse.class);
+        ChatGptResponse chatGptResponse = template.postForObject(apiURL, request, ChatGptResponse.class);
         return chatGptResponse.getChoices().get(0).getMessage().getContent();
     }
 }
