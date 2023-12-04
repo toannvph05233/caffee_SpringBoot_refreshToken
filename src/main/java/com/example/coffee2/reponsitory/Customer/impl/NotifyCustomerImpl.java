@@ -48,19 +48,22 @@ public class NotifyCustomerImpl implements NotifyCustomer {
         if (!isCount) {
             sql.append("select \n");
             sql.append("f.id, \n");
-            sql.append("f.from_user, \n");
-            sql.append("f.to_user, \n");
-            sql.append("f.is_notify, \n");
-            sql.append("f.name, \n");
+            sql.append("f.user_id, \n");
             sql.append("f.post_id, \n");
-            sql.append("f.comment_id \n");
+            sql.append("f.comment_id, \n");
+            if (request.getIsRelyComment() == 1) {
+                sql.append("posts.image_path, posts.category, user1.name, ");
+            }
+//            if (request.getIsComment() == 1) {
+//                sql.append("posts.image_path, posts.category, user1.name, ");
+//            }
+            sql.append("f.create_at \n");
             sql.append("from \n");
             sql.append("notify f \n");
-            if (request.getToUser() != null) {
-                sql.append(" where 1=1 ");
-                sql.append("and f.to_user = :toUser \n");
-                params.put("toUser", request.getToUser());
+            if (request.getIsRelyComment() == 1) {
+                sql.append("join posts on f.post_id = posts.id join user1 on f.user_id = user1.id");
             }
+            sql.append(" where 1=1 ");
         }
     }
 }

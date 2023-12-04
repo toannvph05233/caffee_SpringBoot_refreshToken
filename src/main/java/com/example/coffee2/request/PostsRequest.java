@@ -19,6 +19,11 @@ public class PostsRequest {
     private String createdAt;
     private String updatedAt;
     private String category;
+    private int sortLikeDown;
+    private int sortLikeUp;
+    private int sortCommentDown;
+    private int sortCommentUp;
+
 
     private int pageIndex;
     private int pageSize;

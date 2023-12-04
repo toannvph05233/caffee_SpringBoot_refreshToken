@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class NotifyRequest {
     private Long id;
-    private String fromUser;
-    private String toUser;
-    private Long isNotify;
-    private String name;
+    private String userId;
     private String postId;
     private String commentId;
+    private String createAt;
+    private int isComment;
+    private int isRelyComment;
 }

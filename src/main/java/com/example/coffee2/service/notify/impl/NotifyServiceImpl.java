@@ -9,6 +9,7 @@ import com.example.coffee2.service.notify.NotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,13 +29,13 @@ public class NotifyServiceImpl implements NotifyService {
 
     @Override
     public boolean create(NotifyRequest request) {
+        Date now = new Date();
+
         NotifyEntity obj = new NotifyEntity();
-        obj.setFromUser(request.getFromUser());
-        obj.setToUser(request.getToUser());
-        obj.setIsNotify(1L);
-        obj.setName(request.getName());
+        obj.setUserId(request.getUserId());
         obj.setPostId(request.getPostId());
         obj.setCommentId(request.getCommentId());
+        obj.setCreateAt(request.getCreateAt());
         repository.save(obj);
         return true;
     }

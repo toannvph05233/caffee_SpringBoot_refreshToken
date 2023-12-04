@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
             obj.setDateOfBirth(DateProc.stringToDateDDMMYYYY(request.getDateOfBirth()));
             obj.setSex(request.getSex());
             obj.setImage(request.getImage());
+            obj.setEmail(request.getEmail());
             respository.save(obj);
             return true;
 

@@ -13,21 +13,16 @@ public class NotifyEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notify_seq")
     private Long id;
 
-    @Column(name = "from_user")
-    private String fromUser;
-
-    @Column(name = "to_user")
-    private String toUser;
-
-    @Column(name = "is_notify")
-    private Long isNotify;
-
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "post_id")
     private String postId;
 
     @Column(name = "comment_id")
     private String commentId;
+
+    @Column(name = "create_at")
+    private String createAt;
+
 }

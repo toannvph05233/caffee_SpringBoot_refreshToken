@@ -6,6 +6,7 @@ import com.example.coffee2.reponsitory.Customer.CommentCustomer;
 import com.example.coffee2.request.CommentRequest;
 import com.example.coffee2.response.CommentResponse;
 import com.example.coffee2.service.comment.CommentService;
+import com.example.coffee2.utils.DateProc;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
             obj.setUserId(request.getUserId());
             obj.setPostId(request.getPostId());
             obj.setCommentText(request.getCommentText());
-            obj.setCreateAt(String.valueOf(now));
+            obj.setCreateAt(request.getCreateAt());
             obj.setUpdateAt(request.getUpdateAt());
             obj.setLikeComment(request.getLikeComment());
             obj.setStatus(1L);
@@ -71,8 +72,12 @@ public class CommentServiceImpl implements CommentService {
             obj.setUserId(request.getUserId());
             obj.setPostId(request.getPostId());
             obj.setCommentText(request.getCommentText());
-            obj.setCreateAt(request.getCreateAt());
-            obj.setUpdateAt(String.valueOf(now));
+            obj.setCreateAt(DateProc.dateToStringYYYYMMDD(request.getCreateAt()));
+//            requestMail.setRequestDate(DateProc.getDatetimeFormatYYYYMMDDHH24MISS());
+//            groupEntity.setFileName(DateProc.dateToStringYYYYMMDD(new Date()) + getFileName(request.getBankId()));
+//            rsModel.setApprovedDateStr(DateProc.dateToStringDDMMYYYYMMSS(rsModel.getApprovedDate()));
+
+            obj.setUpdateAt(request.getUpdateAt());
             obj.setLikeComment(request.getLikeComment());
             obj.setStatus(request.getStatus());
             commentRepository.save(obj);

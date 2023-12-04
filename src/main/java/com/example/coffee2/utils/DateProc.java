@@ -84,7 +84,7 @@ public class DateProc {
         return _format_yyyyMMdd.parse(dateStr);
     }
 
-    public static String dateToStringYYYYMMDD(Date date) throws ParseException {
+    public static String dateToStringYYYYMMDD(String date) throws ParseException {
         if (date == null) {
             return "";
         }
