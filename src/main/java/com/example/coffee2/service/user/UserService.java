@@ -1,13 +1,16 @@
 package com.example.coffee2.service.user;
 
 import com.example.coffee2.dto.UserDto;
+import com.example.coffee2.entity.UserEntity;
 import com.example.coffee2.request.UserRequest;
 import com.example.coffee2.response.UserResponse;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
 
 //    String addUser(UserDto userDto);
@@ -23,4 +26,6 @@ public interface UserService {
     boolean updateInfo(UserRequest request);
 
     boolean delete(UserRequest request);
+    UserEntity findByUserNameAndStatus(String username);
+
 }

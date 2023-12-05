@@ -10,10 +10,15 @@ import com.example.coffee2.service.user.UserService;
 import com.example.coffee2.utils.DateProc;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -162,6 +167,28 @@ public class UserServiceImpl implements UserService {
             log.info("not success: " + e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public UserEntity findByUserNameAndStatus(String username) {
+        return respository.findByUserNameAndStatus(username,1l).get();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user =respository.findByUserNameAndStatus(username,1l).get();
+
+        List<GrantedAuthority> roles = new ArrayList<>();
+        String role = user.getRole();
+        GrantedAuthority grantedAuthority = new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return role;
+            }
+        };
+        roles.add(grantedAuthority);
+
+        return new User(username, user.getPassWord(),roles);
     }
 }
 

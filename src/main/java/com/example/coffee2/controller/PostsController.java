@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.example.coffee2.utils.Constants;
 
@@ -29,6 +30,7 @@ public class PostsController {
     @Autowired
     private PostsService postsService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("")
     ResponseEntity<ResponseObject> findAllPosts() {
         List<PostsEntity> foundProduct = repository.findAllPosts();
